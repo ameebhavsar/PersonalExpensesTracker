@@ -36,21 +36,21 @@ class ExpTrack(tkinter.Tk):
         self.expense_label = Label(
             self.frame_input, text="Expense Amount ($):", font=("Times New Roman", 12)
         )
-        self.expense_label.grid(row=0, column=0, padx=5)
+        self.expense_label.grid(row=0, column=0, padx=10)
         self.expense_entry = Entry(
             self.frame_input, font=("Times New Roman", 12), width=15
         )
-        self.expense_entry.grid(row=0, column=1, padx=5)
+        self.expense_entry.grid(row=0, column=1, padx=10)
         self.item_label = Label(
             self.frame_input, text="Item Description:", font=("Times New Roman", 12)
         )
-        self.item_label.grid(row=0, column=2, padx=5)
+        self.item_label.grid(row=0, column=2, padx=10)
         self.item_entry = Entry(self.frame_input, font=("Times New Roman", 12), width=20)
-        self.item_entry.grid(row=0, column=3, padx=5)
+        self.item_entry.grid(row=0, column=3, padx=10)
         self.category_label = Label(
             self.frame_input, text="Type of Expense:", font=("Times New Roman", 12)
         )
-        self.category_label.grid(row=0, column=4, padx=5)
+        self.category_label.grid(row=0, column=4, padx=10)
         self.category_dropdown = tkinter.ttk.Combobox(
             self.frame_input,
             textvariable=self.type_var,
@@ -68,7 +68,7 @@ class ExpTrack(tkinter.Tk):
     
     # Button Definitions
 
-        ## Enter a completed expense
+        # Enter a completed expense
         self.add_exp = Button(self, 
                                       text ="Add Expense", 
                                       command = self.add_action)
@@ -78,7 +78,7 @@ class ExpTrack(tkinter.Tk):
         self.scrollbar = Scrollbar(self.frame_list)
         self.scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
        
-       ## Main box storing the input data
+       # Main box storing the input data
         self.listbox = Listbox(self.frame_list,
                                        font = ("Times New Roman", 12),
                                        width = 100, 
@@ -97,7 +97,7 @@ class ExpTrack(tkinter.Tk):
         self.save_exp = Button(self, text="Save Expenses", command=self.save_action)
         self.save_exp.pack(pady=5)
 
-        self.total_label = Label(self, text="Total Expenses:", font=("Times New Roman", 12)
+        self.total_label = Label(self, text="Total Expenses:", font=("Giddyup Std", 25, "bold")
         )
         self.total_label.pack(pady=5)
 
@@ -176,22 +176,22 @@ class ExpTrack(tkinter.Tk):
 
 
     def show_expenses_chart(self):
-        category_totals = {}
+        totals_per_type = {}
         for expense, _, types, _ in self.expenses:
             try:
                 amount = float(expense)
             except ValueError:
                 continue
-            category_totals[types] = category_totals.get(types, 0) + amount
+            totals_per_type[types] = totals_per_type.get(types, 0) + amount
 
-        types_ofexpense = list(category_totals.keys())
-        expenses = list(category_totals.values())
-        plt.figure(figsize=(8, 6))
+        types_ofexpense = list(totals_per_type.keys())
+        expenses = list(totals_per_type.values())
+        plt.figure(figsize=(8, 8))
         plt.pie(
-            expenses, labels=types_ofexpense, autopct="%1.1f%%", startangle=140, shadow=True
+            expenses, labels=types_ofexpense, autopct="%1.1f%%", startangle=120, shadow=False
         )
         plt.axis("equal")
-        plt.title(f"Expenses Distribution (CAD)")
+        plt.title("Expenses Distribution (CAD)")
         plt.show()
 
     def images(self):
@@ -203,5 +203,7 @@ class ExpTrack(tkinter.Tk):
 if __name__ == "__main__":
     app = ExpTrack()
     app.mainloop()
+
+
 
 
